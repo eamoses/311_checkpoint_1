@@ -18,44 +18,61 @@ const show = (req, res) => {
 
 const create = (req, res) => {
     const newUser = {
-        // createUser
-        id: idAutoIncrement,
         name: "Brett Smith",
         username: "brsmith",
-        email: createUser.email,
+        email: "brsmith@june.biz",
         address: {
-            street: createUser.address.street,
-            suite: createUser.address.suite,
-            city: createUser.address.city,
-            zipcode: createUser.address.zipcode,
+            street: "Roger Ave",
+            suite: "Apt. 294",
+            city: "Austin",
+            zipcode: "78758",
             geo: {
-              lat: createUser.address.geo.lat,
-              lng: createUser.address.geo.lng
+              lat: "-37.3159",
+              lng: "81.1496"
             }
           },
-          phone: createUser.address.phone,
-          website: createUser.address.website,
+          phone: "1-786-244-8273 x2095",
+          website: "brett.org",
           company: {
-            name: createUser.address.company.name,
-            catchPhrase: createUser.address.company.catchPhrase,
-            bs: createUser.address.company.bs
+            name: "Smith-Crona LLC",
+            catchPhrase: "Multi-layered client-server neural-net",
+            bs: "harness real-time e-markets"
           }
     }
     users.push(newUser)
     res.json(users)
 }
 
+const update = (req, res) => {
+    const found = users.some(user => user.id == req.params.id)
+    if (found) {
+        const updateThis = users.filter(user => user.id == req.params.id)
+        updateThis[0].name = req.body.name;
+        const updateUser = {
+            name: "hello world"
+        }
+        updateThis.push(updateUser)
+        res.send(updateThis)
+    } else {
+        res.status(404).json({msg: `User id ${req.params.id} not found.`})
+    }
+}
+
+const remove = (req, res) => {
+    const found = users.some(user => user.id == req.params.id)
+    if (found){
+        const removeThis = users.filter(user => user.id == req.params.id)
+        users.splice(removeThis, 1);
+        res.send(users)
+    } else {
+        res.status(404).json({msg: `User id ${req.params.id} not found.`})
+    }
+}
+
 module.exports = { 
     list,
     show,
-    create
+    create,
+    update,
+    remove
 }
-
-// const newComment = {
-//     _id: Math.floor(Math.random()*100),
-//     body: req.body.body,
-//     postId: req.body.postId
-// }
-// if(!newComment._id) res.status(400).json({ msg: "New comments require an id" })
-// comments.push(newComment)
-// res.json(comments)
