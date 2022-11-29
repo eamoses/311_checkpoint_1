@@ -1,7 +1,6 @@
 const users = require('../data/index')
 const createUser = require('../data/sampleUser')
-const idAutoIncrement = require('id-auto-increment');
-
+// const idAutoIncrement = require('id-auto-increment');
 
 const list = (req, res) => {
     res.json(users)
